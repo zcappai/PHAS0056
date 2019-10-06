@@ -1,7 +1,5 @@
 package module1;
-
 public class DataTypes {
-
 	public static void main(String[] args) {
 		
 		//Assigning a double variable the value of 5.0 and printing it
@@ -34,11 +32,11 @@ public class DataTypes {
 		//INVESTIGATING THE RESULT WHEN VARIABLE TYPES ARE MIXED
 		//Result from integer + string in string format
 		String newVar1 = 5 + "HelloWorld";
-		System.out.println("\n1a)5 + 'HelloWorld': "+newVar1+", this has appended the beginning of the string with the integer.");
+		System.out.println("\n1a)5 + 'HelloWorld': "+newVar1+", this has attached the integer to the beginning of the string.");
 		
 		//Result from letter + number in character format
 		char newVar2 = 'a' + 6;
-		System.out.println("2)'a' + 6: "+newVar2+", this has changed the character 'a' to 'g', which is 6 spaces after 'a' in the alphabet.");
+		System.out.println("2)'a' + 6: "+newVar2+", this has changed the character 'a' to 'g', which is 6 spaces after 'a' in the alphabet and ASCII.");
 		
 		//Result from letter in integer format
 		int newVar3 = 'a';
@@ -57,11 +55,9 @@ public class DataTypes {
 		//The incorrect code above gives an error. Since the integer 'i' has not been initialised, it cannot be called for use in the calculation.
 		
 		//CASTING FROM double TO int
-		//Assigning a double variable the value of 4.99
-		double doubVar1 = 4.99;
+		double doubVar1 = 4.99; //Assigning a double variable the value of 4.99
 		int intVar1 = (int) doubVar1; //Casting the double variable to an int variable
-		System.out.println("Casting double to int: "+intVar1);
-		System.out.println("The double, doubVar1, has been converted to an integer by truncating (removing) the decimal numbers and assigning it to intVar1, which is an integer.");
+		System.out.println("Casting double to int -> "+doubVar1+" becomes "+intVar1);
+		System.out.println("The double, doubVar1, has been converted to an integer by removing (truncating) the decimal numbers and assigning it to intVar1, which is an integer.");
 	}
-
 }
