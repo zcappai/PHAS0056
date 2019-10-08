@@ -59,6 +59,22 @@ public class ThreeVector {
 		double cosx = dot/(mag1*mag2);
 		return Math.acos(cosx);
 	}
+	
+	double scalarProduct(ThreeVector v1) {
+		return scalarProduct(this, v1);
+	}
+
+	ThreeVector vectorProduct(ThreeVector v1) {
+		return vectorProduct(this, v1);
+	}
+
+	ThreeVector add(ThreeVector v1) {
+		return add(this, v1);
+	}
+
+	double angle(ThreeVector v1) {
+		return angle(this, v1);
+	}
 
 	public static void main(String[] args) {
 		ThreeVector vector1 = new ThreeVector(1, 2, 3);
@@ -66,9 +82,13 @@ public class ThreeVector {
 
 		System.out.println("Magnitude: "+vector1.magnitude());
 		System.out.println("Unit Vector:"+vector1.unitVector());
-		System.out.println("Scalar Product: "+scalarProduct(vector1, vector2));
-		System.out.println("Vector Product: "+vectorProduct(vector1, vector2));
-		System.out.println("Vector Addition: "+add(vector1, vector2));
-		System.out.println("Angle Between Vectors: "+angle(vector1, vector2));
+		System.out.println("Scalar Product (static): "+scalarProduct(vector1, vector2));
+		System.out.println("Vector Product (static): "+vectorProduct(vector1, vector2));
+		System.out.println("Vector Addition (static): "+add(vector1, vector2));
+		System.out.println("Angle Between Vectors (static): "+angle(vector1, vector2));
+		System.out.println("Scalar Product (non-static): "+vector1.scalarProduct(vector2));
+		System.out.println("Vector Product (non-static): "+vector1.vectorProduct(vector2));
+		System.out.println("Vector Addition (non-static): "+vector1.add(vector2));
+		System.out.println("Angle Between Vectors (non-static): "+vector1.angle(vector2));
 	}
 }	
