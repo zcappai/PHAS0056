@@ -14,40 +14,33 @@ public class Complex {
 		this.img = i;
 	}
 
-	double real() {
+	public double real() {
 		return real;
 	}
 
-	double imag() {
+	public double imag() {
 		return img;
 	}
 
-	double modulus() {
+	public double modulus() {
 		double mod = Math.sqrt(Math.pow(real, 2) + Math.pow(img, 2));
 		return mod;
 	}
 
-	double angle() {
+	public double angle() {
 		double ang = Math.atan2(img, real);
-//		double tolerance = 0.001;
-//		if(img<0) {
-//			ang = Math.PI - ang;
-//		}
-//		if(real>0 & img<0) {
-//			ang = 2*Math.PI - ang;
-//		}
-//		if(real<0 & img<0) {
-//			ang = Math.PI + ang;
-//		}/////////////////////////////////////////////How to fix problem of (0, -1) and (-1, 0), etc!
+		if(img<0) {
+			ang = ang + 2*Math.PI;
+		}
 		return ang/Math.PI;
 	}
 
-	Complex conjugate() {
+	public Complex conjugate() {
 		Complex c1 = new Complex(real, -img);
 		return c1;
 	}
 	
-	Complex normalised() {
+	public Complex normalised() {
 		double mod = this.modulus();
 		double renorm = real/mod;
 		double imgnorm = img/mod;
@@ -55,67 +48,65 @@ public class Complex {
 		return c1;
 	}
 	
-	boolean equals(Complex c) {			//////////////doesn't work for negative numbers, and need to account for tolerance
-		boolean test = false;
-		if((real % c.real() == 0) && (img % c.imag() == 0)) {
-			test = true;
+	public boolean equals(Complex c) {
+		double tolerance = 0.0001;
+		if(Math.abs(real - c.real())<tolerance & Math.abs(img - c.imag())<tolerance) {
+			return true;
 		}
-		return test;
+		else {
+			return false;
+		}
 	}
 	
 	public String toString() {
 		return real+" + "+img+" i";			//////////If statement to account for negative img
 	}
 	//arg as measured anti-clockwise from positive real axis, as stated in exercise notes
-	static Complex setFromModulusAngle(double mag, double ang) {		///////////static method? doesn't work unless static.
+	static Complex setFromModulusAngle(double mag, double ang) {
 		double re = mag*Math.cos(ang);
 		double im = mag*Math.sin(ang);
 		Complex c = new Complex(re, im);
 		return c;
 	}
 
-	static Complex add(Complex c1, Complex c2) {
+	public static Complex add(Complex c1, Complex c2) {
 		double real = c1.real() + c2.real();
 		double img = c1.imag() + c2.imag();
 		Complex c = new Complex(real, img);
 		return c;
 	}
 	
-	static Complex subtract(Complex c1, Complex c2) {
+	public static Complex subtract(Complex c1, Complex c2) {
 		double real = c1.real() - c2.real();
 		double img = c1.imag() - c2.imag();
 		Complex c = new Complex(real, img);
 		return c;
 	}
 
-	static Complex multiply(Complex c1, Complex c2) {
+	public static Complex multiply(Complex c1, Complex c2) {
 		double real = c1.real()*c2.real() - c1.imag()*c2.imag();
 		double img = c1.imag()*c2.real() + c1.real()*c2.imag();
 		Complex c = new Complex(real, img);
 		return c;
 	}
 
-	static Complex divide(Complex c1, Complex c2) {
-		double renum = c1.real()*c2.real() + c1.imag()*c2.imag();
-		double redenom = Math.pow(c2.real(), 2) + Math.pow(c2.imag(), 2);
-		double imnum = c1.imag()*c2.real() - c1.real()*c2.imag();
-		double imdenom = Math.pow(c2.real(), 2) + Math.pow(c2.imag(), 2);
-		double real = renum/redenom;
-		double img = imnum/imdenom;
-		Complex c = new Complex(real, img);
+	public static Complex divide(Complex c1, Complex c2) {
+		Complex num = multiply(c1, c2.conjugate());
+		double denom = Math.pow(c2.real(), 2) + Math.pow(c2.imag(), 2);
+		Complex c = new Complex(num.real()/denom, num.imag()/denom);
 		return c;
 	}
 	
 	public static void main(String[] args) {
 
-		Complex c1 = new Complex(-1, -1);
-		Complex c2 = new Complex(1, 2);
+		Complex c1 = new Complex(1, 2);
+		Complex c2 = new Complex(3, 4);
 		System.out.println("Real: "+c1.real());
 		System.out.println("Imaginary: "+c1.imag());
 		System.out.println("Modulus: "+c1.modulus());
 		System.out.println("Argument: "+c1.angle()+"pi radians");
 		System.out.println("Conjugate: "+c1.conjugate());
-		System.out.println("Normalised: "+c1.normalised());			////////normalised method gives wrong answer when after conjugate
+		System.out.println("Normalised: "+c1.normalised());
 		System.out.println("Equal Number: "+c1.equals(c2));
 		System.out.println("Modulus and Angle: "+setFromModulusAngle(1, 0.5*Math.PI));
 		System.out.println("Add: "+add(c1, c2));
