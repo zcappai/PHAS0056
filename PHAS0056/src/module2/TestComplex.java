@@ -1,5 +1,5 @@
 package module2;
-public class TextComplex {
+public class TestComplex {
 	public static void main(String[] args) {
 
 		//2 'Complex' objects created to form 2 complex numbers
