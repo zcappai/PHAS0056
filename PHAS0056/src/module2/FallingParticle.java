@@ -1,67 +1,86 @@
 package module2;
-
 public class FallingParticle {
 
-	double m;			//////static
-	double d;			//////static
-	double t = 0.0;
-	double z;
-	double h;
-	double v = 0;
-	static final double g = 9.81;
+	//Member Variables
+	//Can be used by and shared between methods defined in class
+	double m; //Mass of falling particle (kilograms, kg)
+	double d; //Drag coefficient (dimensionless)
+	double t; //Time elapsed since particle drop (seconds, s)
+	double z; //Vertical position of particle (measured upwards from base of vessel) (metres, m)
+	double h; //Initial starting height of particle (measured upwards from base of vessel) (metres, m)
+	double v; //Velocity of particle (measured upwards) (metres per second, ms^-1)
+	//'static final' ensure 'g' remains a constant, which can't be reinitialised
+	static final double g = 9.81; //Acceleration due to gravity (metres per second squared, ms^-2)
 
-	public FallingParticle(double m, double d) {			///////reseting values for different objects?
+	//Constructor
+	//Used to set up 'FallingParticle' object when creating new 'FallingParticle' object using 'new' command
+	public FallingParticle(double m, double d) { //2 'double' variable arguments for mass and drag coefficient
+
+		//Assigns member variables to each part of 'FallingParticle' object
+		//m and d refer to mass and drag coefficient of 'FallingParticle' object
 		this.m = m;
 		this.d = d;
 	}
 
-	public void setH(double val) {
-		h = val;
+	//SETS INITIAL STARTING HEIGHT OF PARTICLE DROP
+	public void setH(double val) { //'double' variable argument for initial height
+		h = val; //Sets initial starting height
 	}
 
+	//GETS CURRENT VERTICAL POSITION OF PARTICLE (MEASURED UPWARDS FROM BASE)
 	public double getZ() {
-		return z;
+		return z; //Returns vertical position
 	}
 
-	public void setV(double val) {
-		v = val;
+	//SETS VELOCITY OF PARTICLE (MEASURED UPWARDS FROM BASE)
+	public void setV(double val) { //'double' variable argument for velocity
+		v = val; //Sets velocity of particle
 	}
 
+	//GETS CURRENT VELOCITY OF PARTICLE (MEASURED UPWARDS FROM BASE)
 	public double getV() {
-		return v;
+		return v; //Returns velocity of particle
 	}
 
+	//GETS TIME ELAPSED SINCE PARTICLE DROP
 	public double getT() {
-		return t;
+		return t; //Returns time elapsed
 	}
-	
-	public void doTimeStep(double deltaT) {
+
+	//CALCULATES ACCELERATION OF PARTICLE IN CURRENT STATE, AND UPDATES VELOCITY AND POSITION
+	public void doTimeStep(double deltaT) { //'double' variable argument for time step
+		//Calculates acceleration using equation: a = (d*v^2/m)-g
 		double a = (d*Math.pow(getV(), 2)/m) - g;
-		System.out.println("\nCurrent Acceleration: "+a);
-		setV(v + a*deltaT);
-		System.out.println("Current Velocity: "+getV());
-		z = z + getV()*deltaT;
+		//Calculates and sets new velocity using expression: v+a*deltaT
+		setV(getV() + a*deltaT);
+		//Calculates and sets new position using expression: z+v*deltaT
+		z = getZ() + getV()*deltaT;
 	}
-	
-	public void drop(double deltaT) {
-		z = h;
-		System.out.println("\nInitial Time: "+getT());
-		System.out.println("Initial Height: "+getZ());
-		System.out.println("Initial Velocity: "+getV());
+
+	//SIMULATES DESCENT OF DROPPED PARTICLE TO BASE OF VESSEL
+	public void drop(double deltaT) { //'double' variable argument for time step
+		//Initialising variables
+		z = h; //Sets current position to initial height
+		t = 0.0; //Sets start time to 0.0
+		v = 0.0; //Sets start velocity to 0.0
+
+		//Runs 'doTimeSteps()' method while current position of particle is above base (z>0)
+		//Increases time elapsed by 'deltaT' each loop until position of particle is below base (z<0)
 		while(z>0) {
-			doTimeStep(deltaT);
-			System.out.println("Current Height: "+getZ());
-			t = t + deltaT;
-			System.out.println("Current Time: "+getT());
+			doTimeStep(deltaT); //Updates velocity and position of particle every loop
+			t = getT() + deltaT; //Sets new time elapsed using expression: t+deltaT
 		}
-		System.out.println("\nTime Taken: "+getT());
-		System.out.println("Velocity at Bottom: "+getV());
+		System.out.println("Time Steps: "+deltaT+" s"); //Prints size of time step
+		System.out.println("Time Taken: "+getT()+" s"); //Prints time taken to reach base of vessel
+		System.out.println("Velocity at Bottom: "+getV()+" m/s\n"); //Prints velocity at base of vessel
 	}
 
 	public static void main(String[] args) {
-		FallingParticle p = new FallingParticle(4.3, 2.4);
-		p.setH(5);
-		p.drop(0.001);
-	}
 
+		//'FallingParticle' object created to test class
+		FallingParticle p = new FallingParticle(5, 2);
+
+		p.setH(5); //Sets initial starting height to 5m
+		p.drop(0.01); //Simulates descent of particle for 0.01s time steps
+	}
 }
