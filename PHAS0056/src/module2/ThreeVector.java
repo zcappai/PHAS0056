@@ -1,94 +1,124 @@
 package module2;
-
 public class ThreeVector {
 
-	double x;
-	double y;
-	double z;
+	//Member Variables
+	//Can be used by and shared between methods defined in class
+	public double x; //x-component
+	public double y; //y-component
+	public double z; //z-component
 
-	public ThreeVector(double x, double y, double z) {
+	//Constructor
+	//Used to set up 'ThreeVector' object when creating new 'ThreeVector' object using 'new' command
+	public ThreeVector(double x, double y, double z) { //3 'double' variable arguments for 3 elements of vector
+
+		//Assigns member variables to each component of 'ThreeVector' object
+		//x, y and z refer to respective component of 'ThreeVector' object
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 
-	double magnitude() {
+	//CALCULATES MAGNITUDE OF 3-COMPONENT VECTOR
+	public double magnitude() {
+		//Calculates by squaring each component, summing and then square rooting the sum
 		double magn = Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2)+Math.pow(z, 2));
-		return magn;
+		return magn; //Returns magnitude of 3D vector
 	}
 
-	ThreeVector unitVector() {
-		double xUnit = x/magnitude();
-		double yUnit = y/magnitude();
-		double zUnit = z/magnitude();
-		ThreeVector unVec = new ThreeVector(xUnit, yUnit, zUnit);
-		return unVec;
+	//CALCULATES UNIT VECTOR OF 3-COMPONENT VECTOR
+	public ThreeVector unitVector() {
+		//Calculates by dividing each component by magnitude of vector
+		double xUnit = x/magnitude(); //x-component
+		double yUnit = y/magnitude(); //y-component
+		double zUnit = z/magnitude(); //z-component
+		//Returns vector by creating new 'ThreeVector' object using unit components
+		return new ThreeVector(xUnit, yUnit, zUnit);
 	}
 
+	//CONVERTS OBJECT TO STRING TO PRINT 'ThreeVector' OBJECTS AS VECTOR
 	public String toString() {
-		return "("+x+", "+y+", "+z+")";
+		return "("+x+", "+y+", "+z+")"; //Vector string layout (x, y, z)
 	}
 
-	static double scalarProduct(ThreeVector v1, ThreeVector v2) {
-		double xrow = v1.x * v2.x;
-		double yrow = v1.y * v2.y;
-		double zrow = v1.z * v2.z;
-		return xrow + yrow + zrow;
+	//CALCULATES SCALAR PRODUCT OF 2x 3-COMPONENT VECTORS (STATIC)
+	public static double scalarProduct(ThreeVector v1, ThreeVector v2) { //2 'ThreeVector' objects as vector arguments
+		//Calculates by multiplying corresponding components of 2 vectors (e.g. x1*x2)
+		double xrow = v1.x * v2.x; //x-components
+		double yrow = v1.y * v2.y; //y-components
+		double zrow = v1.z * v2.z; //z-components
+		return xrow + yrow + zrow; //Returns sum of products of corresponding components
 	}
 
-	static ThreeVector vectorProduct(ThreeVector v1, ThreeVector v2) {
-		double xrow = (v1.y * v2.z) - (v1.z * v2.y);
-		double yrow = (v1.z * v2.x) - (v1.x * v2.z);
-		double zrow = (v1.x * v2.y) - (v1.y * v2.x);
-		ThreeVector xProd = new ThreeVector(xrow, yrow, zrow);
-		return xProd;
+	//CALCULATES VECTOR PRODUCT OF 2x 3-COMPONENT VECTORS (STATIC)
+	public static ThreeVector vectorProduct(ThreeVector v1, ThreeVector v2) { //2 'ThreeVector' objects as vector arguments
+		//Calculates using equation for vector product: (y1*z2-z1*y2)i + (z1*x2-x1*z2)j + (x1*y2-y1*x2)k
+		double xrow = (v1.y * v2.z) - (v1.z * v2.y); //x-component
+		double yrow = (v1.z * v2.x) - (v1.x * v2.z); //y-component
+		double zrow = (v1.x * v2.y) - (v1.y * v2.x); //z-components
+		//Returns vector by creating new 'ThreeVector' object using vector product components
+		return new ThreeVector(xrow, yrow, zrow);
 	}
 
-	static ThreeVector add(ThreeVector v1, ThreeVector v2) {
-		double xrow = v1.x + v2.x;
-		double yrow = v1.y + v2.y;
-		double zrow = v1.z + v2.z;
-		ThreeVector addVec = new ThreeVector(xrow, yrow, zrow);
-		return addVec;
+	//CALCULATES SUM OF 2x 3-COMPONENT VECTORS (STATIC)
+	public static ThreeVector add(ThreeVector v1, ThreeVector v2) { //2 'ThreeVector' objects as vector arguments
+		//Calculates by summing corresponding components from 2 vectors (e.g. x1+x2)
+		double xrow = v1.x + v2.x; //x-component
+		double yrow = v1.y + v2.y; //y-component
+		double zrow = v1.z + v2.z; //z-component
+		//Returns vector by creating new 'ThreeVector' object using summed components
+		return new ThreeVector(xrow, yrow, zrow);
 	}
 
-	static double angle(ThreeVector v1, ThreeVector v2) {
-		double dot = scalarProduct(v1, v2);
-		double mag1 = v1.magnitude();
-		double mag2 = v2.magnitude();
-		double cosx = dot/(mag1*mag2);
-		return Math.acos(cosx);
-	}
-	
-	double scalarProduct(ThreeVector v1) {
-		return scalarProduct(this, v1);
+	//CALCULATES ANGLES BETWEEN 2x 3-COMPONENT VECTORS (STATIC)
+	public static double angle(ThreeVector v1, ThreeVector v2) { //2 'ThreeVector' objects as vector arguments
+		//Calculates using equation for angle between vectors: cos(theta)=(v1.v2)/(|v1||v2|)
+		double dot = scalarProduct(v1, v2); //Scalar product of 2 vectors
+		double mag1 = v1.magnitude(); //Magnitude of 1st vector
+		double mag2 = v2.magnitude(); //Magnitude of 2nd vector
+		double cosx = dot/(mag1*mag2); //Cosine of angle from equation shown above
+		return Math.acos(cosx); //Returns angle in radians by inverse cosine of 'cosx'
 	}
 
-	ThreeVector vectorProduct(ThreeVector v1) {
-		return vectorProduct(this, v1);
+	//CALCULATES SCALAR PRODUCT OF 2x 3-COMPONENT VECTORS (NON-STATIC)
+	public double scalarProduct(ThreeVector v1) { //'ThreeVector' object as vector argument
+		//Calculates by calling static 'scalarProduct()' method
+		return scalarProduct(this, v1); //Returns scalar product
 	}
 
-	ThreeVector add(ThreeVector v1) {
-		return add(this, v1);
+	//CALCULATES VECTOR PRODUCT OF 2x 3-COMPONENT VECTORS (NON-STATIC)
+	public ThreeVector vectorProduct(ThreeVector v1) { //'ThreeVector' object as vector argument
+		//Calculates by calling static 'vectorProduct()' method
+		return vectorProduct(this, v1); //Returns vector product
 	}
 
-	double angle(ThreeVector v1) {
-		return angle(this, v1);
+	//CALCULATES SUM OF 2x 3-COMPONENT VECTORS (NON-STATIC)
+	public ThreeVector add(ThreeVector v1) { //'ThreeVector' object as vector argument
+		//Calculates by calling static 'add()' method
+		return add(this, v1); //Returns sum of 2 vectors
+	}
+
+	//CALCULATES ANGLE BETWEEN 2x 3-COMPONENT VECTORS (NON-STATIC)
+	public double angle(ThreeVector v1) { //'ThreeVector' object as vector argument
+		//Calculates by calling static 'angle()' method
+		return angle(this, v1); //Returns angle between 2 vectors in radians
 	}
 
 	public static void main(String[] args) {
-		ThreeVector vector1 = new ThreeVector(1, 2, 3);
-		ThreeVector vector2 = new ThreeVector(4, 5, 6);
 
-		System.out.println("Magnitude: "+vector1.magnitude());
-		System.out.println("Unit Vector:"+vector1.unitVector());
-		System.out.println("Scalar Product (static): "+scalarProduct(vector1, vector2));
+		//2 'ThreeVector' objects created to test class
+		ThreeVector vector1 = new ThreeVector(1, -2, 3);
+		ThreeVector vector2 = new ThreeVector(-4, 5, -6);
+
+		//Print statements to test class
+		System.out.println("Magnitude (vector1): "+vector1.magnitude());
+		System.out.println("Unit Vector (vector1):"+vector1.unitVector());
+		System.out.println("\nScalar Product (static): "+scalarProduct(vector1, vector2));
 		System.out.println("Vector Product (static): "+vectorProduct(vector1, vector2));
 		System.out.println("Vector Addition (static): "+add(vector1, vector2));
-		System.out.println("Angle Between Vectors (static): "+angle(vector1, vector2));
-		System.out.println("Scalar Product (non-static): "+vector1.scalarProduct(vector2));
+		System.out.println("Angle Between Vectors (static): "+angle(vector1, vector2)+" radians");
+		System.out.println("\nScalar Product (non-static): "+vector1.scalarProduct(vector2));
 		System.out.println("Vector Product (non-static): "+vector1.vectorProduct(vector2));
 		System.out.println("Vector Addition (non-static): "+vector1.add(vector2));
-		System.out.println("Angle Between Vectors (non-static): "+vector1.angle(vector2));
+		System.out.println("Angle Between Vectors (non-static): "+vector1.angle(vector2)+" radians");
 	}
 }	
