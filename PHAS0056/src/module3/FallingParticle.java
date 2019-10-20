@@ -12,13 +12,22 @@ public class FallingParticle {
 	//'static final' ensure 'g' remains a constant, which can't be reinitialised
 	static final double g = 9.81; //Acceleration due to gravity (metres per second squared, ms^-2)
 
+	//AMENDED SECTION
 	//Constructor
 	//Used to set up 'FallingParticle' object when creating new 'FallingParticle' object using 'new' command
-	public FallingParticle(double m, double d) throws IllegalArgumentException{ //2 'double' variable arguments for mass and drag coefficient
-		if(m<0) {
+	public FallingParticle(double m, double d) throws IllegalArgumentException{ //Specifies that method can throw an exception
+		//Initialising variables
+		t = 0.0; //Sets start time to 0.0
+		v = 0.0; //Sets start velocity to 0.0
+
+		//Throws illegal argument exception if mass is unphysical
+		if(m<=0) {
+			//Error message printed when exception thrown
 			throw new IllegalArgumentException("Unphysical mass of "+m+"kg entered. Please enter physical value!");
 		}
+		//Throws illegal argument exception if drag coefficient is unphysical
 		if(d<0) {
+			//Error message printed when exception thrown
 			throw new IllegalArgumentException("Unphysical drag coefficient of "+d+" entered. Please enter physical value!");
 		}
 		//Assigns member variables to each part of 'FallingParticle' object
@@ -27,9 +36,12 @@ public class FallingParticle {
 		this.d = d;
 	}
 
+	//AMENDED SECTION
 	//SETS INITIAL STARTING HEIGHT OF PARTICLE DROP
-	public void setH(double val) throws IllegalArgumentException{ //'double' variable argument for initial height
+	public void setH(double val) throws IllegalArgumentException{ //Specifies that method can throw an exception
+		//Throws exception if initial starting height is set to be unphysical
 		if(val<0) {
+			//Error message printed when exception thrown
 			throw new IllegalArgumentException("Unphysical height of "+val+"m entered. Please enter physical value!");
 		}
 		h = val; //Sets initial starting height
@@ -60,26 +72,23 @@ public class FallingParticle {
 		//Calculates acceleration using equation: a = (d*v^2/m)-g
 		double a = (d*Math.pow(getV(), 2)/m) - g;
 		//Calculates and sets new velocity using expression: v+a*deltaT
-		setV(getV() + a*deltaT);
+		setV(v + a*deltaT);
 		//Calculates and sets new position using expression: z+v*deltaT
-		z = getZ() + getV()*deltaT;
+		z += v*deltaT;
+		//Sets new time elapsed using expression: t+deltaT
+		t += deltaT;
 	}
 
 	//SIMULATES DESCENT OF DROPPED PARTICLE TO BASE OF VESSEL
-	public void drop(double deltaT) throws IllegalArgumentException{ //'double' variable argument for time step
-		//Initialising variables
+	public void drop(double deltaT) throws IllegalArgumentException{ //Specifies that method can throw an exception
 		z = h; //Sets current position to initial height
-		t = 0.0; //Sets start time to 0.0
-		v = 0.0; //Sets start velocity to 0.0
-		double tolerance = 0.000001;
-		if(deltaT<tolerance) {
+		if(deltaT<=0) {
+			//Error message printed when exception thrown
 			throw new IllegalArgumentException("Unphysical time step of "+deltaT+"s entered. Please enter physical value!");
 		}
 		//Runs 'doTimeSteps()' method while current position of particle is above base (z>0)
-		//Increases time elapsed by 'deltaT' each loop until position of particle is below base (z<0)
 		while(z>0) {
 			doTimeStep(deltaT); //Updates velocity and position of particle every loop
-			t = getT() + deltaT; //Sets new time elapsed using expression: t+deltaT
 		}
 		System.out.println("Time Steps: "+deltaT+" s"); //Prints size of time step
 		System.out.println("Time Taken: "+getT()+" s"); //Prints time taken to reach base of vessel
@@ -88,14 +97,14 @@ public class FallingParticle {
 
 	public static void main(String[] args) {
 
-		//'FallingParticle' object created to test class
+		//Testing try and catch structures
 		FallingParticle p = new FallingParticle(5, 2);
 
-		p.setH(5); //Sets initial starting height to 5m
+		//Exception thrown when setting negative height
 		try {
-			p.drop(0.0);
+			p.setH(-5);
 		}
-		catch (IllegalArgumentException e1) {
+		catch (Exception e1) {
 			System.out.println(e1);
 		}
 	}

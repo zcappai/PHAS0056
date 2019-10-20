@@ -35,7 +35,7 @@ public class Complex {
 	//CALCULATES MODULUS OF COMPLEX NUMBER
 	public double modulus() {
 		//Calculates by squaring real and imaginary parts, summing and then square rooting the sum
-		double mod = Math.sqrt(Math.pow(real, 2) + Math.pow(img, 2));
+		double mod = Math.sqrt(real*real + img*img);
 		return mod; //Returns modulus
 	}
 
@@ -57,13 +57,17 @@ public class Complex {
 		//Returns complex number by creating new 'Complex' object with real and negative imaginary parts
 		return new Complex(real, -img);
 	}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	//AMENDED SECTION
 	//CALCULATES NORMALISED FORM OF COMPLEX NUMBER (MODULUS = 1)
-	public Complex normalised() throws IllegalArgumentException{
+	public Complex normalised() throws Exception{ //Specifies that method can throw an exception
 		//Calculates by dividing real and imaginary parts by modulus
 		double mod = this.modulus(); //Modulus of complex number
+
+		//Throws exception if modulus of complex number is zero
 		if(mod == 0) {
-			throw new IllegalArgumentException("The modulus is zero. Division by zero is not allowed!");
+			//Error message printed when exception thrown
+			throw new Exception("Modulus is zero. Division by zero not allowed. Please enter non-zero complex number!");
 		}
 		double renorm = real/mod; //Real part normalised
 		double imgnorm = img/mod; //Imaginary part normalised
@@ -73,10 +77,9 @@ public class Complex {
 
 	//RETURNS BOOLEAN OF 'true' IF CURRENT AND ARGUMENT COMPLEX NUMBERS ARE EQUAL
 	public boolean equals(Complex c) { //'Complex' object as complex number argument
-		double tolerance = 0.0001; //'tolerance' level required due to 'double' variables
 
 		//'true' if absolute difference between corresponding real and imaginary parts is less than tolerance 
-		if(Math.abs(real - c.real())<tolerance & Math.abs(img - c.imag())<tolerance) {
+		if(real == c.real() & img == c.imag()) {
 			return true;
 		}
 		//'false' if absolute difference between corresponding real and imaginary parts is greater than tolerance
@@ -94,18 +97,8 @@ public class Complex {
 	//Argument measured anti-clockwise from positive real axis on Argand diagram
 	static Complex setFromModulusAngle(double mag, double ang) { //2 'double' variables for modulus and argument as arguments
 		//Calculates by multiplying magnitude with cosine (real) or sine (imaginary) of argument
-		double tolerance = 0.0001; //'tolerance' level required due to 'double' variables
 		double re = mag*Math.cos(ang); //Real part of complex number
 		double im = mag*Math.sin(ang); //Imaginary part of complex number
-
-		//Imaginary part is 0 if absolute difference between 0 and imaginary part is less than tolerance
-		if(Math.abs(0 - im)<tolerance) {
-			im = 0;
-		}
-		//Real part is 0 if absolute difference between 0 and real part is less than tolerance
-		else if(Math.abs(0 - re)<tolerance) {
-			re = 0;
-		}
 		//Returns complex number by creating new 'Complex' object with calculated real and imaginary parts
 		return new Complex(re, im);
 	}
@@ -136,39 +129,43 @@ public class Complex {
 		//Returns complex number by creating new 'Complex' object with real and imaginary parts
 		return new Complex(real, img);
 	}
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	//AMENDED SECTION
 	//CALCULATES RATIO OF 2 COMPLEX NUMBERS
-	public static Complex divide(Complex c1, Complex c2) throws Exception{  //2 'Complex' objects as complex number arguments
+	public static Complex divide(Complex c1, Complex c2) throws IllegalArgumentException{ //Specifies that method can throw an exception
+		//Throws exception if both real and imaginary parts of c2 are zero
+		if(c2.real() == 0 & c2.imag() == 0) {
+			//Error message printed when exception thrown
+			throw new IllegalArgumentException("2nd complex number is zero. Division by zero not allowed. Please enter non-zero complex number!");
+		}
 		//Calculates using equation: (a+bi)/(c+di) = (a+bi)(c-di)/(c^2+d^2)
 		Complex num = multiply(c1, c2.conjugate()); //Numerator of above equation
-		double denom = Math.pow(c2.real(), 2) + Math.pow(c2.imag(), 2);
-		if(c2.real() == 0 & c2.imag() == 0) {
-			throw new Exception("Dividing by 0 complex number. Not allowed.");
-		}
+		double denom = c2.real()*c2.real() + c2.imag()*c2.imag();
 		return new Complex(num.real()/denom, num.imag()/denom); //Numerator divided by denominator for complex number
 	}
 
 	public static void main(String[] args) {
 
-		//2x 'Complex' objects created to test class
+		//2 'Complex' objects created to test class
 		Complex c1 = new Complex(0, 0);
 		Complex c2 = new Complex(1, 2);
 
-		//Print statements to test class
+		//Testing try and catch structures
+		//Exception thrown when normalising zero complex number
 		try {
 			Complex norm = c1.normalised();
 			System.out.println(norm);
 		}
-		catch (Exception e) {
-			System.out.println("The modulus is zero. Division by zero is not allowed!");
+		catch (Exception e1) {
+			System.out.println(e1);
 		}
+		//Exception thrown when dividing by zero complex number
 		try {
 			Complex div = divide(c2, c1);
 			System.out.println(div);
-			
 		}
-		catch (Exception e) {
-			System.out.println("Dividing by 0. This is not allowed! Change 2nd argument!");
+		catch (Exception e2) {
+			System.out.println(e2);
 		}
 	}
 }

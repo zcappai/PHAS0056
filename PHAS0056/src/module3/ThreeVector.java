@@ -21,19 +21,23 @@ public class ThreeVector {
 	//CALCULATES MAGNITUDE OF 3-COMPONENT VECTOR
 	public double magnitude() {
 		//Calculates by squaring each component, summing and then square rooting the sum
-		double magn = Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2)+Math.pow(z, 2));
+		double magn = Math.sqrt(x*x + y*y + z*z);
 		return magn; //Returns magnitude of 3D vector
 	}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	//AMENDED SECTION
 	//CALCULATES UNIT VECTOR OF 3-COMPONENT VECTOR
-	public ThreeVector unitVector() throws IllegalArgumentException{
-		if(magnitude() == 0) {
-			throw new IllegalArgumentException("Zero vector entered. No unit vector exists.");
+	public ThreeVector unitVector() throws Exception{ //Specifies that method can throw an exception
+		double mag = magnitude();
+		//Throws exception if magnitude of vector is zero
+		if(mag == 0) {
+			//Error message printed when exception thrown
+			throw new Exception("Zero vector has zero magnitude. Division by zero not allowed. Please enter non-zero vector!");
 		}
 		//Calculates by dividing each component by magnitude of vector
-		double xUnit = x/magnitude(); //x-component
-		double yUnit = y/magnitude(); //y-component
-		double zUnit = z/magnitude(); //z-component
+		double xUnit = x/mag; //x-component
+		double yUnit = y/mag; //y-component
+		double zUnit = z/mag; //z-component
 		//Returns vector by creating new 'ThreeVector' object using unit components
 		return new ThreeVector(xUnit, yUnit, zUnit);
 	}
@@ -71,11 +75,21 @@ public class ThreeVector {
 		//Returns vector by creating new 'ThreeVector' object using summed components
 		return new ThreeVector(xrow, yrow, zrow);
 	}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	//AMENDED SECTION
 	//CALCULATES ANGLES BETWEEN 2x 3-COMPONENT VECTORS (STATIC)
-	public static double angle(ThreeVector v1, ThreeVector v2) throws IllegalArgumentException{ //2 'ThreeVector' objects as vector arguments
-		if(v1.magnitude() == 0 || v2.magnitude() == 0) {
-			throw new IllegalArgumentException("Zero vector entered. Angle cannot be found. Zero vector has no direction.");
+	public static double angle(ThreeVector v1, ThreeVector v2) throws IllegalArgumentException{ //Specifies that method can throw an exception
+
+		//Throws exception if magnitude of 1st vector is zero
+		if(v1.magnitude() == 0) {
+			//Error message printed when exception thrown
+			throw new IllegalArgumentException("Zero vector entered. Angle cannot be found. Please change 1st vector!");
+		}
+
+		//Throws exception if magnitude of 2nd vector is zero
+		if(v2.magnitude() == 0) {
+			//Error message printed when exception thrown
+			throw new IllegalArgumentException("Zero vector entered. Angle cannot be found. Please change 2nd vector!");
 		}
 		//Calculates using equation for angle between vectors: cos(theta)=(v1.v2)/(|v1||v2|)
 		double dot = scalarProduct(v1, v2); //Scalar product of 2 vectors
@@ -115,20 +129,22 @@ public class ThreeVector {
 		ThreeVector vector1 = new ThreeVector(0, 0, 0);
 		ThreeVector vector2 = new ThreeVector(1, 2, 3);
 
-		//Print statements to test class
+		//Testing try and catch structures
+		//Exception thrown when calculating unit vector
 		try {
 			ThreeVector v1 = vector1.unitVector();
 			System.out.println(v1);
 		}
-		catch (Exception e) {
-			System.out.println("Zero vector entered. CANNOT divide by zero. Please enter a non-zero vector!");
+		catch (Exception e1) {
+			System.out.println(e1);
 		}
+		//Exception thrown when find angle using a zero vector
 		try {
 			double v2 = angle(vector1, vector2);
 			System.out.println(v2);
 		}
-		catch (Exception e) {
-			System.out.println("Zero vector entered. Since zero vector has no direction, angle CANNOT be found!");
+		catch (Exception e2) {
+			System.out.println(e2);
 		}
 	}
 }	
