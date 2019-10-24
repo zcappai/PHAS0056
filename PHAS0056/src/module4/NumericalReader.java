@@ -9,7 +9,6 @@ public class NumericalReader {
 	private double maxValue;
 	private int nValues;
 	private double sumOfValues;
-	private File file;
 	private FileWriter f;
 	private BufferedWriter bw;
 	private PrintWriter pw;
@@ -31,8 +30,6 @@ public class NumericalReader {
 	}
 
 	void analysisStart(String dataFile) throws IOException{
-		//File outputfile = new File(dataFile);
-		//file = outputfile;
 		f = new FileWriter(dataFile);
 		bw = new BufferedWriter(f);
 		pw = new PrintWriter(bw);
@@ -49,16 +46,13 @@ public class NumericalReader {
 			while(sc.hasNext()) {
 				double token = Double.parseDouble(sc.next());
 				System.out.println(token);
-				//FileWriter fw = new FileWriter(file);
-				//BufferedWriter bw = new BufferedWriter(fw);
-				//PrintWriter pw = new PrintWriter(bw);
 				pw.println(token);
 				sumOfValues += token;
 				nValues++;
-				if(token < minValue) {
+				if(token < minValue || minValue == 0) {
 					minValue = token;
 				}
-				else if(token > maxValue) {
+				else if(token > maxValue || maxValue == 0) {
 					maxValue = token;
 				}
 			}
@@ -71,22 +65,17 @@ public class NumericalReader {
 		System.out.println("\nMinimum Value is "+minValue);
 		System.out.println("Maximum Value is "+maxValue);
 		System.out.println("Number of Values is "+nValues);
-		System.out.println("Sum of Values is "+sumOfValues);
+		System.out.println("Sum of Values is "+sumOfValues+"\n");
 	}
 
 	public static void main(String[] args) {
 
-		NumericalReader nr = new NumericalReader();
+		NumericalReader nr1 = new NumericalReader();
+		NumericalReader nr2 = new NumericalReader();
 		BufferedReader reader = null;
-		try {
-			reader = nr.brFromURL("http://www.hep.ucl.ac.uk/undergrad/3459/data/module4/module4_data1.txt");
-		}
-		catch(IOException e1) {
-			System.out.println("Please enter a valid URL!");
-		}
 		String line = "";
 		String saveDir;
-
+		
 		try {
 			saveDir = NumericalReader.getStringFromKeyboard();
 		}
@@ -94,31 +83,54 @@ public class NumericalReader {
 			saveDir = System.getProperty("user.home");
 		}
 
-		String saveFile = (saveDir + File.separator + "numbers1.txt");
+		String saveFile1 = (saveDir + File.separator + "numbers1.txt");
 
 		try {
-			nr.analysisStart(saveFile); // initialise minValue etc.
+			reader = nr1.brFromURL("http://www.hep.ucl.ac.uk/undergrad/3459/data/module4/module4_data1.txt");
+		}
+		catch(IOException e1) {
+			System.out.println("Please enter a valid URL!");
+		}
+
+		try {
+			nr1.analysisStart(saveFile1); // initialise minValue etc.
 		}
 		catch (IOException e3) {
 			System.out.println(e3);
 		}
 		try {		
 			while ((line = reader.readLine()) != null) {
-				nr.analyseData(line); // analyse lines, check for comments etc.
+				nr1.analyseData(line); // analyse lines, check for comments etc.
 			}
 		}
 		catch (IOException e4) {
 			System.out.println(e4);
 		}
-		nr.analysisEnd(); // print min, max, etc.
-
-		/*NumericalReader x = new NumericalReader();
+		nr1.analysisEnd(); // print min, max, etc.
+		
 		try {
-			getStringFromKeyboard();
+			reader = nr2.brFromURL("http://www.hep.ucl.ac.uk/undergrad/3459/data/module4/module4_data2.txt");
 		}
-		catch(Exception e1) {
-		}*/
+		catch(IOException e5) {
+			System.out.println("Please enter a valid URL!");
+		}
 
+		String saveFile2 = (saveDir + File.separator + "numbers2.txt");
+
+		try {
+			nr2.analysisStart(saveFile2); // initialise minValue etc.
+		}
+		catch (IOException e6) {
+			System.out.println(e6);
+		}
+		try {		
+			while ((line = reader.readLine()) != null) {
+				nr2.analyseData(line); // analyse lines, check for comments etc.
+			}
+		}
+		catch (IOException e7) {
+			System.out.println(e7);
+		}
+		nr2.analysisEnd(); // print min, max, etc.
 	}
-
 }
