@@ -5,16 +5,16 @@ import java.util.*; //Importing utilities package for 'Scanner'
 
 public class WordCounter {
 
-	//TAKES URL AS ARGUMENT AND RETURNS 'BUFFEREDREADER OBJECT
+	//TAKES URL AS ARGUMENT AND RETURNS 'BufferedReader' OBJECT
 	public static BufferedReader brFromURL(String urlName) throws IOException{ //Specifies that method throws an IOException
 		URL u = new URL(urlName); //Creates 'URL' object with URL from argument
-		InputStream is = u.openStream(); //Using 'URL' objects openSteam method to get input stream from URL
-		InputStreamReader isr = new InputStreamReader(is); //Reads from InputStream (reads contents of URL)
-		//Returns 'BufferedReader' object, which buffers large parts of data from InputStream to memory for faster access
+		InputStream is = u.openStream(); //Using 'URL' object's openSteam method to get input stream from URL
+		InputStreamReader isr = new InputStreamReader(is); //Reads from 'InputStream' (reads contents of URL from 'openStream')
+		//Returns 'BufferedReader' object, which buffers large parts of data from URL to memory for faster access
 		return new BufferedReader(isr);
 	}
 
-	//TAKES NAME OF FILE ON DISK AS ARGUMENT AND RETURNS 'BUFFEREDREADER' OBJECT
+	//TAKES NAME OF FILE ON DISK AS ARGUMENT AND RETURNS 'BufferedReader' OBJECT
 	public static BufferedReader brFromFile(String fileName) throws IOException{ //Specifies that method throws an IOException
 		FileReader fr = new FileReader(fileName); //Readers characters from specified file
 		return new BufferedReader(fr); //Returns 'BufferedReader' object, which buffers data from file for faster access
@@ -41,7 +41,7 @@ public class WordCounter {
 			System.out.println("Number of Words in URL: "+countWordsInResource(brFromURL("http://www.hep.ucl.ac.uk/undergrad/3459/data/module4/module4_text.txt")));
 			System.out.println("\nUpon comparing the total words in the URL to the same text in Microsoft Word, there is a small discrepancy in the total number\n"
 					+ "of words. This is because the delimiter in Java is white space, therefore when reading text with a double hyphen, Java reads the\n"
-					+ "text as 1 word. Whereas Microsoft Word reads 2 words separated by a double hyphen as 2 words. This is the source of the discrepancy.");
+					+ "text as 1 word. Whereas Microsoft Word reads 2 words separated by a double hyphen, as 2 words. This is the source of the discrepancy.");
 		}
 		catch (IOException e1) {
 			System.out.println(e1);

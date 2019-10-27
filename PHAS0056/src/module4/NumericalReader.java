@@ -16,9 +16,9 @@ public class NumericalReader {
 
 	//ALLOWS USER TO ENTER 'String' VIA KEYBOARD AND STORES RESULTING 'String'
 	public static String getStringFromKeyboard() throws IOException{ //Specifies that method throws an IOException
+		System.out.println("Please Enter The Save Directory:"); //Prompts user to enter save directory of data files
 		InputStreamReader isr = new InputStreamReader(System.in); //Reads characters input from keyboard
 		BufferedReader br = new BufferedReader(isr); //Buffers data from keyboard to memory for faster access
-		System.out.println("Please Enter The Save Directory:"); //Prompts user to enter save directory of data files
 		String s = br.readLine(); //Reads line of text entered and stores as a 'String'
 
 		//Throws exception if user provide no keyboard input
@@ -51,7 +51,7 @@ public class NumericalReader {
 	}
 
 	//ANALYSES EACH LINE OF DATA FROM URL
-	void analyseData(String line) throws IOException { //Specifies that method throws and IOException
+	void analyseData(String line) { //Takes line of data as a 'String' from URL as argument
 		Scanner sc = new Scanner(line); //Looks for tokens in line separated by whitespace
 
 		/*Line is only analysed if it is not empty or first character is not a letter
@@ -62,18 +62,18 @@ public class NumericalReader {
 			while(sc.hasNext()) {
 				//Returns new 'double' initialised to value of token
 				double token = Double.parseDouble(sc.next());
-				System.out.println(token); //Prints value of number to screen
-				pw.println(token); //Writes value of number to file 
+				System.out.println(token); //Prints number to screen
+				pw.println(token); //Writes number to file 
 				sumOfValues += token; //Adds number to 'sumOfValues'
 				nValues++; //Increases 'nValues' by 1 per number
 
-				//Sets 'minValue' to number if either number is less than 'minValue'
-				//Or if 'minValue' is 0, to set its initial value
+				/*Sets 'minValue' to number if either number is less than 'minValue'
+				Or if 'minValue' is 0 (setting its initial value)*/
 				if(token < minValue || minValue == 0) {
 					minValue = token;
 				}
-				//Sets 'maxValue' to number if either number is greater than 'maxValue'
-				//Or if 'maxValue' is 0, to set its initial value
+				/*Sets 'maxValue' to number if either number is greater than 'maxValue'
+				Or if 'maxValue' is 0 (setting its initial value*/
 				else if(token > maxValue || maxValue == 0) {
 					maxValue = token;
 				}
@@ -85,7 +85,7 @@ public class NumericalReader {
 	//PRINTS MINIMUM, MAXIMUM, TOTAL SUM OF, NUMBER OF AND AVERAGE VALUE(S) 
 	void analysisEnd() {
 		//Closing 'PrintWriter' closes 'BufferedWriter' and 'FileWriter'
-		pw.close(); //Closes resource to clean memory
+		pw.close(); //Closes the file for writing and cleans the memory
 		System.out.println("\nMinimum Value is "+minValue);
 		System.out.println("Maximum Value is "+maxValue);
 		System.out.println("Number of Values is "+nValues);
@@ -95,9 +95,13 @@ public class NumericalReader {
 
 	public static void main(String[] args) {
 
-		//Creating 2 'NumericalReadr' objects to analyse data from 2 URLs 
+		//Creating 2 'NumericalReader' objects to analyse data from 2 URLs 
 		NumericalReader nr1 = new NumericalReader();
 		NumericalReader nr2 = new NumericalReader();
+
+		//2 'String' variables for name of data files
+		String dataFile1 = "numbers1.txt";
+		String dataFile2 = "numbers2.txt";
 
 		BufferedReader reader = null; //Initialises variable for reading line
 		String line = ""; //Initialises variable for storing line as 'String' 
@@ -105,16 +109,17 @@ public class NumericalReader {
 
 		/*Tries to call 'getStringFromKeyboard' method to specify save directory of data.
 		If there is no user input, IOException is thrown and save directory defaults to
-		home directory, which is printed*/
+		home directory, which is also printed in the error message*/
 		try {
-			saveDir = NumericalReader.getStringFromKeyboard();
+			saveDir = NumericalReader.getStringFromKeyboard(); //Sets input string as save directory
 		}
 		catch (IOException e1) {
-			saveDir = System.getProperty("user.home");
+			saveDir = System.getProperty("user.home"); //Sets home directory as save directory
 			System.out.println(e1+saveDir);
 		}
 
-		String saveFile1 = (saveDir + File.separator + "numbers1.txt"); //Stores file location as 'String'
+		//Stores file location for 1st data file as 'String'
+		String saveFile1 = (saveDir + File.separator + dataFile1);
 
 		/*Tries to call 'brFromURL' method for 'nr1' and assigns it to 'BufferedReader' variable, so that
 		contents of URL can be read. If invalid URL is entered, IOException is thrown and error message shown*/
@@ -122,41 +127,56 @@ public class NumericalReader {
 			reader = nr1.brFromURL("http://www.hep.ucl.ac.uk/undergrad/3459/data/module4/module4_data1.txt");
 		}
 		catch(IOException e2) {
-			System.out.println("Please enter a valid URL!");
+			System.out.println("Please enter a valid URL!"); //Message when invalid URL entered
 		}
 
-		/**/
+		/*Tries to call 'analysisStart' method for 'nr1' to create data file and initialise variables,
+		but if method throws an IOException, error message will be printed*/
 		try {
-			nr1.analysisStart(saveFile1); // initialise minValue etc.
+			nr1.analysisStart(saveFile1); //Creates data file and initialises variables
 		}
 		catch (IOException e3) {
 			System.out.println(e3);
 		}
+
+		/*Tries to call 'analyseData' method for 'nr1' to analyse line of text from URL, while the 'BufferedReader'
+		object is not empty. 'analyseData' method prints numbers to screen, writes numbers to file and updates all
+		variables. If method throws IOException, error message will be printed*/
 		try {		
 			while ((line = reader.readLine()) != null) {
-				nr1.analyseData(line); // analyse lines, check for comments etc.
+				nr1.analyseData(line); //Analyses line, updating variables and printing to screen/writing to file
 			}
 		}
 		catch (IOException e4) {
 			System.out.println(e4);
 		}
-		nr1.analysisEnd(); // print min, max, etc.
 
+		nr1.analysisEnd(); //Prints maximum, minimum, sum of, total number of and average value(s)
+
+		/*Tries to call 'brFromURL' method for 'nr2' and assigns it to 'BufferedReader' variable, so that
+		contents of URL can be read. If invalid URL is entered, IOException is thrown and error message shown*/
 		try {
 			reader = nr2.brFromURL("http://www.hep.ucl.ac.uk/undergrad/3459/data/module4/module4_data2.txt");
 		}
 		catch(IOException e5) {
-			System.out.println("Please enter a valid URL!");
+			System.out.println("Please enter a valid URL!"); //Message when invalid URL entered
 		}
 
-		String saveFile2 = (saveDir + File.separator + "numbers2.txt");
+		//Stores file location for 2nd data file as 'String'
+		String saveFile2 = (saveDir + File.separator + dataFile2);
 
+		/*Tries to call 'analysisStart' method for 'nr2' to create data file and initialise variables,
+		but if method throws an IOException, error message will be printed*/
 		try {
-			nr2.analysisStart(saveFile2); // initialise minValue etc.
+			nr2.analysisStart(saveFile2); //Creates data file and initialises variables
 		}
 		catch (IOException e6) {
 			System.out.println(e6);
 		}
+
+		/*Tries to call 'analyseData' method for 'nr2' to analyse line of text from URL, while the 'BufferedReader'
+		object is not empty. 'analyseData' method prints numbers to screen, writes numbers to file and updates all
+		variables. If method throws IOException, error message will be printed*/
 		try {		
 			while ((line = reader.readLine()) != null) {
 				nr2.analyseData(line); // analyse lines, check for comments etc.
@@ -165,6 +185,6 @@ public class NumericalReader {
 		catch (IOException e7) {
 			System.out.println(e7);
 		}
-		nr2.analysisEnd(); // print min, max, etc.
+		nr2.analysisEnd(); //Prints maximum, minimum, sum of, total number of and average value(s)
 	}
 }
