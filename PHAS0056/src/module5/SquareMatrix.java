@@ -1,21 +1,33 @@
 package module5;
-import java.util.*;
+import java.util.*; //Importing input/output package
 
 public class SquareMatrix {
 
-	double matrix[][];
+	double matrix[][]; //Member variable for matrix
 
+	/**
+	 * CONSTRUCTOR TAKES 2D ARRAY OF DOUBLE VALUES AS ARGUMENT
+	 * USED TO SET UP 'SquareMatrix' OBJECT
+	 * @param elements - 2D array of doubles
+	 * @throws Exception - IF 2D ARRAY IS NOT VALID SQUARE MATRIX
+	 */
 	public SquareMatrix(double[][] elements) throws Exception{
-		matrix = elements;
+		matrix = elements; //Assigns matrix member variable to 2D array argument
 		for(int i = 0; i < elements.length; i++) {
-			if(elements.length != elements[i].length) {
+			if(elements.length != elements[i].length) { //If row lengths don't equal column lengths
 				throw new Exception("Argument is NOT valid square matrix! Please enter valid square matrix!");
 			}
 		}
 	}
 
+	/**
+	 * ALLOWS MATRIX TO BE PRINTED IN READABLE FORM
+	 */
 	public String toString() {
+		//Matrix to be stored as string in 'StringBuilder' object
 		StringBuilder x = new StringBuilder();
+		/*Each array, within array of arrays, appended to new line
+		in 'StringBuilder' object*/
 		for(int i=0; i < matrix.length; i++) {
 			x.append(Arrays.toString(matrix[i]));
 			x.append("\n");
@@ -23,16 +35,26 @@ public class SquareMatrix {
 		return x.toString();
 	}
 
+	/**
+	 * OUTPUTS UNIT MATRIX OF SPECIFIED SIZE
+	 * @param size of matrix
+	 * @return
+	 * @throws Exception - IF OUTPUT MATRIX NOT SQUARE
+	 */
 	public static SquareMatrix unitMatrix(int size) throws Exception{
+		//Creates empty, square 2D array
 		double[][] unit = new double[size][size];
+		//Sets leading diagonal elements to 1's
 		for(int i = 0; i < size; i++) {
 			unit[i][i] = 1;			
 		}
-		SquareMatrix x = new SquareMatrix(unit);
-		return x;
+		//Returns square unit matrix
+		return new SquareMatrix(unit);
 	}
 
-	@Override
+	/**
+	 * OVERRIDING 'hashCode' SINCE 'equals' WILL ALSO BE OVERRIDEN
+	 */
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -40,7 +62,12 @@ public class SquareMatrix {
 		return result;
 	}
 
-	@Override
+	/**
+	 * OVERRIDING 'equals' TO CHECK IF 2 MATRICES ARE EQUAL
+	 * CHECKS, RESPECTIVELY, IF BOTH OBJECTS ARE SAME OBJECT, IF OBJECT IS EMPTY,
+	 * IF BOTH OBJECTS BELONG TO SAME CLASS AND FINALLY COMPARES
+	 * MEMBER VARIABLES IF BOTH OBJECTS BELONG TO SAME CLASS
+	 */
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -54,112 +81,115 @@ public class SquareMatrix {
 		return true;
 	}
 
+	/**
+	 * CALCULATES SUM OF 2 MATRICES
+	 * @param sm1 - square matrix
+	 * @param sm2 - square matrix
+	 * @return
+	 * @throws Exception - IF DIMENSIONS OF MATRICES NOT IDENTICAL
+	 */
 	public static SquareMatrix add(SquareMatrix sm1, SquareMatrix sm2) throws Exception{
 		if(sm1.matrix.length != sm2.matrix.length) {
-			throw new IllegalArgumentException("Dimensions of matrices not identical. Please enter matrices of identical size!");
+			throw new IllegalArgumentException("Dimensions of matrices not identical. Please enter square matrices!");
 		}
-
+		//Creates empty, square 2D array with dimensions of matrices in argument
 		double[][] sum = new double[sm1.matrix.length][sm1.matrix.length];
 
+		//Sums corresponding elements from both matrices and adds to empty 2D array
 		for(int i = 0; i < sm1.matrix.length; i++) {
 			for(int j = 0; j < sm1.matrix.length; j++) {
 				sum[i][j] = sm1.matrix[i][j] + sm2.matrix[i][j];
 			}
 		}
-
+		//Returns sum of 2 square matrices
 		return new SquareMatrix(sum);
 	}
 
+	/**
+	 * CALCULATES SUBTRACTION OF 2 MATRICES
+	 * @param sm1 - square matrix
+	 * @param sm2 - square matrix
+	 * @return
+	 * @throws Exception - IF DIMENSIONS OF MATRICES ARE NOT IDENTICAL
+	 */
 	public static SquareMatrix subtract(SquareMatrix sm1, SquareMatrix sm2) throws Exception{
 		if(sm1.matrix.length != sm2.matrix.length) {
 			throw new IllegalArgumentException("Dimensions of matrices not identical. Please enter matrices of identical size!");
 		}
-
+		//Creates empty, square 2D array with dimensions of matrices in argument
 		double[][] minus = new double[sm1.matrix.length][sm1.matrix.length];
 
+		//Subtracts corresponding elements from both matrices and adds to empty 2D array
 		for(int i = 0; i < sm1.matrix.length; i++) {
 			for(int j = 0; j < sm1.matrix.length; j++) {
 				minus[i][j] = sm1.matrix[i][j] - sm2.matrix[i][j];
 			}
 		}
-
+		//Returns subtraction of 2 square matrices
 		return new SquareMatrix(minus);
 	}
 
+	/**
+	 * CALCULATES PRODUCT OF 2 MATRICES 
+	 * @param sm1 - square matrix
+	 * @param sm2 - square matrix
+	 * @return
+	 * @throws Exception - IF DIMENSIONS OF MATRICES ARE NOT IDENTICAL
+	 */
 	public static SquareMatrix multiply(SquareMatrix sm1, SquareMatrix sm2) throws Exception{
+		//Matrix multiplication general formula: P_ij = A_ik*B_kj, where RHS is summed over all k values
 		if(sm1.matrix.length != sm2.matrix.length) {
 			throw new IllegalArgumentException("Dimensions of matrices not identical. Please enter matrices of identical size!");
 		}
-
+		//Creates empty, square 2D array with dimensions of matrices in argument
 		double[][] times = new double[sm1.matrix.length][sm1.matrix.length];
 
+		//First 2 'for' loops set all elements of 2D array to 0
 		for(int i = 0; i < sm1.matrix.length; i++) {
 			for(int j = 0; j < sm1.matrix.length; j++) {
-				times[i][j] = 0;
+
+				//3rd 'for' loop multiplies according to equation above
 				for(int k = 0; k < sm1.matrix.length; k++) {
 					times[i][j] += sm1.matrix[i][k]*sm2.matrix[k][j];
 				}
 			}
 		}
-
+		//Returns product of 2 square matrices
 		return new SquareMatrix(times);
 	}
 
-	public static void main(String[] args) {
-		SquareMatrix y1 = null;
-		SquareMatrix y2 = null;
-		double[][] x1 = new double[][] {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-		double[][] x2 = new double[][] {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-		try {
-			y1 = new SquareMatrix(x1);
-			System.out.println(y1);
-		}
-		catch(Exception e1) {
-			System.out.println(e1);
-		}
-
-		try {
-			y2 = new SquareMatrix(x2);
-			System.out.println(y2);
-		}
-		catch(Exception e1) {
-			System.out.println(e1);
-		}
-
-		try {
-			SquareMatrix z = unitMatrix(3);
-			System.out.println(z);
-		}
-		catch(Exception e2) {
-			System.out.println(e2);
-		}
-
-		try {
-			SquareMatrix sum = add(y1, y2);
-			System.out.println(sum);
-		}
-		catch(Exception e3) {
-			System.out.println(e3);
-		}
-
-		try {
-			SquareMatrix minus = subtract(y1, y2);
-			System.out.println(minus);
-		}
-		catch(Exception e4) {
-			System.out.println(e4);
-		}
-
-		try {
-			SquareMatrix times = multiply(y1, y2);
-			System.out.println(times);
-		}
-		catch(Exception e5) {
-			System.out.println(e5);
-		}
-		System.out.println(y1.equals(y2));
-
-
+	/**
+	 * NON-STATIC VERSION OF METHOD TO SUM 2 MATRICES
+	 * CALLS STATIC VERSION
+	 * @param sm2 - square matrix
+	 * @return
+	 * @throws Exception - IF DIMENSIONS OF MATRICES ARE NOT IDENTICAL
+	 */
+	public SquareMatrix add(SquareMatrix sm2) throws Exception{
+		return add(this, sm2);
 	}
 
+	/**
+	 * NON-STATIC VERSION OF METHOD TO SUBTRACT 2 MATRICES
+	 * CALLS STATIC VERSION
+	 * @param sm2 - square matrix
+	 * @return
+	 * @throws Exception - IF DIMENSIONS OF MATRICES ARE NOT IDENTICAL
+	 */
+	public SquareMatrix subtract(SquareMatrix sm2) throws Exception{
+		return subtract(this, sm2);
+	}
+
+	/**
+	 * NON-STATIC VERSION OF METHOD TO MULTIPLY 2 MATRICES
+	 * CALLS STATIC VERSION
+	 * @param sm2 - square matrix
+	 * @return
+	 * @throws Exception - IF DIMENSIONS OF MATRICES ARE NOT IDENTICAL
+	 */
+	public SquareMatrix multiply(SquareMatrix sm2) throws Exception{
+		return multiply(this, sm2);
+	}
+
+	public static void main(String[] args) {}
 }
