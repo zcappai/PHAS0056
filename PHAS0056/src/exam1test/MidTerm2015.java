@@ -182,6 +182,8 @@ public class MidTerm2015 {
 	public static void main(String[] args) {
 		//URL of data to be analysed
 		String url1 = "http://www.hep.ucl.ac.uk/undergrad/3459/exam-data/2015-16/earthquakesCA1989.txt";
+		System.out.println("URL of Earthquake Data: "+url1);
+
 		HashMap<Integer, MidTerm2015> x = null; //Empty 'HashMap' initialised for earthquake data
 
 		/** Tries to load earthquake data into 'HashMap', then prints total number of earthquakes in year.
