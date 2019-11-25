@@ -1,11 +1,13 @@
 package module6;
 
+//SUPERCLASS
+//Creates constructor for 'DataPoint' object, 'getter' and 'toString' methods
 public class DataPoint {
 
 	//Member variables
-	double x; //x-coordinate
-	double y; //y-coordinate
-	double ey; //error on y-coordinate
+	protected double x; //x-coordinate
+	protected double y; //y-coordinate
+	protected double ey; //error on y-coordinate
 
 	/**
 	 * CONSTRUCTOR USED TO SET UP 'DataPoint' OBJECT
@@ -44,8 +46,11 @@ public class DataPoint {
 		return ey;
 	}
 
+	/**
+	 * REPRESENTS 'DataPoint' OBJECT AS STRING
+	 */
 	@Override
 	public String toString() {
-		return "x = " + x + ", y = " + y + " +- " + ey;
+		return "x = " + getX() + ", y = " + getY() + " +- " + getEY();
 	}
 }

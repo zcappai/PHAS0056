@@ -1,11 +1,18 @@
 package module6;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.*; //Importing input/output package
+import java.net.*; //Importing networking package for 'URL'
+import java.util.*; //Importing utilities package
 
+//Creates method to import data from URL to 'ArrayList' and prints each data point as String
 public class TestDataPoints {
 
+	/**
+	 * IMPORTS DATA FROM URL AND CONVERTS TO 'ArrayList' OF 'DataPoint' OBJECTS
+	 * @param url of x, y and ey data
+	 * @return
+	 * @throws Exception - IF INVALID URL USED, NO INPUT FROM URL OR NO INPUT WHEN READING LINE
+	 */
 	public static ArrayList<DataPoint> dataFromURL(String url) throws Exception{
 		//Creates empty 'ArrayList' of 'DataPoint' objects to store 'x', 'y' and 'ey'
 		ArrayList<DataPoint> data = new ArrayList<DataPoint>();
@@ -24,27 +31,31 @@ public class TestDataPoints {
 		while ((line = reader.readLine()) != null) {
 			Scanner sc = new Scanner(line);
 			while(sc.hasNext()) {
-				double xtoken = Double.parseDouble(sc.next());
-				double ytoken = Double.parseDouble(sc.next());
-				double eytoken = Double.parseDouble(sc.next());
-				DataPoint p = null;
+				double xtoken = sc.nextDouble();
+				double ytoken = sc.nextDouble();
+				double eytoken = sc.nextDouble();
+				DataPoint p = null; //Creating empty 'DataPoint' object
+
+				//If there is a next token (label), the data is put into 'LabelledDataPoint' object
 				if(sc.hasNext()) {
 					String label = sc.next();
 					p = new LabelledDataPoint(label, xtoken, ytoken, eytoken);
 				}
+				//If there is no next token (label), the data is put into 'DataPoint' object
 				else {
 					p = new DataPoint(xtoken, ytoken, eytoken);
 				}
-				data.add(p);
+				data.add(p); //'DataPoint' or 'LabelledDataPoint' added to 'ArrayList' object
 			}
 			sc.close(); //Closing resource to clean memory
 		}
-		return data;
+		return data; //Returns 'ArrayList' of 'DataPoint' objects
 	}
 
 	public static void main(String[] args) {
+		//Initialising URL as string and creating empty 'ArrayList' of 'DataPoint' objects
 		String url = "http://www.hep.ucl.ac.uk/undergrad/3459/data/module6/module6-data.txt";
-		ArrayList<DataPoint> data = null;
+		ArrayList<DataPoint> data = null; //Empty 'ArrayList' of 'DataPoint' objects
 
 		/**
 		 * Tries to import data from URL and return 'ArrayList' of 'DataPoint' objects
@@ -56,12 +67,17 @@ public class TestDataPoints {
 			System.out.println("URL: "+url+"\n");
 		}
 		catch(Exception e) {
-			System.out.println(e);
+			System.out.println(e+"\nPlease enter a valid URL!");
 		}
+		System.out.println("There are "+data.size()+" data points in the URL\n");
 
-		System.out.println("<Data Points>");
-		for(DataPoint x : data) {
-			System.out.println(x+System.lineSeparator());
+		//Only prints 'DataPoint' objects if data imported correctly
+		if(data != null) {
+			System.out.println("<Data Points From URL>");
+			//Prints each 'DataPoint' object from 'ArrayList' as String
+			for(DataPoint x : data) {
+				System.out.println(x);
+			}
 		}
 	}
 }
