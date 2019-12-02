@@ -1,23 +1,23 @@
 package module6;
 
-import java.util.*;	
+import java.util.*; //Importing utilities package
 
+/* Implements 'GoodnessOfFitCalculator' interface to create method
+ * for calculating goodness of fit of data to theoretical function */ 
 public class ChiSquared implements GoodnessOfFitCalculator {
 
 	/**
-	 * CALCULATES CHI-SQUARED STATISTIC BETWEEN FUNCTION AND DATA
-	 * @param theo - 'Theory' object that sets n for y=x^n
-	 * @param data - 'ArrayList' of 'DataPoint' objects
-	 * @return
+	 * CALCULATES CHI-SQUARED STATISTIC BETWEEN DATA AND THEORETICAL FUNCTION
 	 */
 	public double goodnessOfFit(Collection<DataPoint> data, Theory theo) {
-		//Chi-squared calculates using equation: sum((y_coord-y_theor)^2/ey^2)
+		//Chi-squared calculated using equation: sum((y_coord-y_theor)^2/ey^2)
 		double chi2 = 0; //Initialising chi-squared variable
 
 		/* Calculates chi-squared statistic for each 'DataPoint' object, and adds
 		 * to 'chi2' variable */
-		for(int i = 0; i<data.size(); i++) {
-			DataPoint point = data.iterator().next(); //Gets i^th 'DataPoint' object from 'ArrayList'
+		Iterator<DataPoint> dataIterator = data.iterator(); //Creates iterator over 'Collection' of 'DataPoint' objects
+		while(dataIterator.hasNext()) {
+			DataPoint point = dataIterator.next(); //Gets next 'DataPoint' object from 'Collection'
 
 			//Gets 'x', 'y', 'ey' and calculates theoretical 'y' for given 'x'
 			double x_coord = point.getX();
@@ -25,28 +25,8 @@ public class ChiSquared implements GoodnessOfFitCalculator {
 			double y_error = point.getEY();
 			double y_theor = theo.y(x_coord);
 
-			chi2 += Math.pow((y_coord-y_theor), 2)/(y_error*y_error); //Each contribution added to variable
+			chi2 += Math.pow((y_coord-y_theor), 2)/(y_error*y_error); //Each contribution added to 'chi2' variable
 		}
 		return chi2; //Returns chi-squared statistic
-	}
-
-	public Collection<Double> quadCollection(Collection<DataPoint> data, QuadraticTheory n) {
-		Collection<Double> theoArray = null;
-		for(DataPoint point : data) {
-			double xcoord = point.getX();
-			Double y = n.y(xcoord);
-			theoArray.add(y);
-		}
-		return theoArray;
-	}
-
-	public Collection<Double> powerCollection(Collection<DataPoint> data, PowerLawTheory n) {
-		Collection<Double> theoArray = null;
-		for(DataPoint point : data) {
-			double xcoord = point.getX();
-			Double y = n.y(xcoord);
-			theoArray.add(y);
-		}
-		return theoArray;
 	}
 }

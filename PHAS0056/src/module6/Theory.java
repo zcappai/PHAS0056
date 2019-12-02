@@ -1,9 +1,10 @@
 package module6;
 
+//Interface defines abstract method to calculate theoretical 'y' values
 public interface Theory {
 
 	/**
-	 * CALCULATES VALUE OF FUNCTION y=x^n
+	 * DEFINES FUNCTION TO CALCULATE THEORETICAL 'y' COORDINATE
 	 * @param x-coordinate
 	 * @return
 	 */
