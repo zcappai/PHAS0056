@@ -1,22 +1,29 @@
 package module8;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.*; //Importing utilities package
+import java.util.concurrent.*; //Importing 'concurrent' package
 
+/* Main class to calculate 2 estimates of PI. 1st from single thread Monte Carlo method and 2nd from
+ * 4 different threads that calculate 1/4 of points each simultaneously and value of PI is averaged
+ * from all 4 values. Each method is timed by finding difference between their respective start and
+ * end times */
 public class ThreadsTimer {
-
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
-		long nPoints = 10000000L;
-		int nThreads = 4;
+		long nPoints = 10000000L; //Number of points to randomly generate
+		int nThreads = 4; //Number of threads for 2nd estimate
 
+		/* Calculates value of PI for given number of randomly generated points.
+		 * Duration 'duration1' also calculated from start time 'startTime1' and
+		 * end time 'endTime1' */
 		long startTime1 = System.currentTimeMillis();
-		MonteCarloPiCalculatorTask task1 = new MonteCarloPiCalculatorTask(nPoints);
-		double pi1 = task1.call();
+		MonteCarloPiCalculatorTask task1 = new MonteCarloPiCalculatorTask(nPoints); //Setting number of points to generate
+		double pi1 = task1.call(); //Calculating value of PI
 		long endTime1 = System.currentTimeMillis();
 		long duration1 = endTime1-startTime1;
 		System.out.println("Value of PI: "+pi1);
 		System.out.println("Duration of Single Thread: "+duration1+" milliseconds");
 
+		/* Calculates PI */
 		long startTime4 = System.currentTimeMillis();
 		ExecutorService threadPool = Executors.newFixedThreadPool(nThreads);
 		List<Future<Double>> futures = new ArrayList<Future<Double>>();
