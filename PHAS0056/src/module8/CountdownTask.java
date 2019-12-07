@@ -2,30 +2,30 @@ package module8;
 
 public class CountdownTask implements Runnable {
 
-	int seconds;
+	static int seconds;
 
 	public CountdownTask(int seconds) {
-		this.seconds = seconds;
+		CountdownTask.seconds = seconds;
 	}
 
 	public void run() {
-		long start = System.currentTimeMillis(); //Assigns current time to "start"
-		long end = start + seconds*1000; //"end" time is "runTime" after "start" time
-		long total = seconds*1000;
-
-		while(System.currentTimeMillis() < end) {
-			long diff = end - System.currentTimeMillis();
-			long remain = diff/1000;
-			if(remain < total) {
-				total = remain;
-				System.out.println(total+" seconds");
+		long startTime = System.currentTimeMillis();
+		long endTime = System.currentTimeMillis() + (seconds * 1000);
+		long temp = startTime + 1000 ;
+		System.out.print(seconds + " seconds remaining\n" );
+		while (startTime < endTime) {
+			if (startTime == temp) {
+				seconds--;
+				System.out.print(seconds + " seconds remaining\n");
+				temp += 1000;
 			}
+			startTime = System.currentTimeMillis();
 		}
-//		System.out.println(seconds); 
+		System.out.println("0 seconds remaining");
 	}
 
 	public static void main(String[] args) {
-		new CountdownTask(5).run();
+		CountdownTask timer = new CountdownTask(10);
+		timer.run();
 	}
-
 }
