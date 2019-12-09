@@ -32,7 +32,7 @@ public class CountdownTask implements Runnable {
 
 		//Counts down in intervals of 1 second from given duration time
 		while (startTime < endTime) {
-			if (startTime == temp) {
+			if (startTime >= temp) {
 				seconds--;
 				System.out.print(seconds + " seconds remaining\n");
 				//Increases elapsed time by 1 second to check if another second has passed
