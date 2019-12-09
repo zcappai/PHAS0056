@@ -14,12 +14,12 @@ public class CountdownTask implements Runnable {
 	/**
 	 * Implements 'run()' method as countdown timer
 	 * First sets start time, then end time using duration of timer
-	 * Sets 'temp' variable as time elapsed since start of countdown
-	 * Initial time printed, then if starting time is equal to itself
-	 * plus 1000 ms (1 second), then 'seconds' member variable is reduced by 1
+	 * Sets 'temp' variable as check for time elapsed since start of countdown
+	 * Initial time printed, then if starting time is equal to itself plus 1000 ms
+	 * (1 second), then 'seconds' member variable is reduced by 1
 	 * and printed. Time elapsed variable increased by 1 second (1000 ms) and
 	 * loop is repeated until reaching the end time. Starting time is updated
-	 * for each loop of 'while' loop. While loop runs as long as updated start
+	 * for each loop of 'while' loop. While loop will run as long as updated start
 	 * time is less than end time.
 	 */
 	public void run() {

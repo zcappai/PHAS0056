@@ -21,15 +21,15 @@ public class MonteCarloPiCalculatorTask implements Callable<Double> {
 	 * are between 0 and 1. If the point (x, y) is within unit distance
 	 * of origin, 'n_in' is incremented by 1. Given enough points, the
 	 * ratio of 'n_in' to 'n_points' becomes PI/4, so ratio is multiplied
-	 * by 4 to return PI
+	 * by 4 to return PI.
 	 */
 	public Double call() {
 		//Formula used: PI = 4*(points within unit distance of origin/total number of points)
 		Random rand = new Random(); //Object used to generate random numbers
 		long n_in = 0; //Number of points within unit distance of origin
 
-		/* Generates random x and y, and increments 'n_in' by 1 if (x, y) within unit distance of origin
-		 * For loop runs for 'n_points' number of times */
+		/* Generates random x and y doubles between 0 and 1, and increments 'n_in' by 1 if
+		 * (x, y) within unit distance of origin. 'For' loop runs for 'n_points' number of times */
 		for(long iPoint = 0; iPoint < n_points; ++iPoint) {
 			double x = rand.nextDouble();
 			double y = rand.nextDouble();
