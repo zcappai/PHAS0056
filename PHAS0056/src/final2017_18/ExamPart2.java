@@ -8,19 +8,6 @@ public class ExamPart2 {
 		System.out.println("Airports Data URL: "+one.URL1);
 		System.out.println("Flights Data URL: "+one.URL2);
 
-		try {
-			one.readAirportData(one.URL1);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
-		try {
-			one.readFlightData(one.URL2);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
-
 		one.print();
 
 		//LHR to ATH for no more than £200

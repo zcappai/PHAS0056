@@ -14,6 +14,21 @@ public class ExamPart1 {
 	protected ArrayList<Flights> flightList = new ArrayList<>();
 	protected HashMap<Flights, Long> flightDuration = new HashMap<>();
 
+	public ExamPart1() {
+		try {
+			readAirportData(URL1);
+		}
+		catch(Exception e) {
+			System.out.println("Invalid URL entered! Please enter valid URL!");
+		}
+		try {
+			readFlightData(URL2);
+		}
+		catch(Exception e) {
+			System.out.println("Invalid URL entered! Please enter valid URL!");
+		}
+	}
+
 	//TAKES URL AS ARGUMENT AND RETURNS 'BufferedReader' OBJECT
 	public BufferedReader brFromURL(String urlName) throws IOException{ //Specifies that method throws an IOException
 		URL u = new URL(urlName); //Creates 'URL' object with URL from argument
@@ -74,19 +89,6 @@ public class ExamPart1 {
 		ExamPart1 one = new ExamPart1();
 		System.out.println("Airports Data URL: "+one.URL1);
 		System.out.println("Flights Data URL: "+one.URL2);
-
-		try {
-			one.readAirportData(one.URL1);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
-		try {
-			one.readFlightData(one.URL2);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
 
 		one.print();
 		for(Map.Entry<Flights, Long> x : one.flightDuration.entrySet()) {

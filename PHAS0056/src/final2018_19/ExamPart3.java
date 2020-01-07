@@ -3,42 +3,16 @@ package final2018_19;
 import java.util.*;
 
 public class ExamPart3 {
-
-	static final ArrayList<Classification> classList = new ArrayList<>();
-	static final ArrayList<Location> locList = new ArrayList<>();
-	static final ArrayList<Classification> expList = new ArrayList<>();
-
 	public static void main(String[] args) {
-		String URL1 = "http://www.hep.ucl.ac.uk/undergrad/0056/exam-data/2018-19/classification.txt";
-		String URL2 = "http://www.hep.ucl.ac.uk/undergrad/0056/exam-data/2018-19/locations.txt";
-		String URL3 = "http://www.hep.ucl.ac.uk/undergrad/0056/exam-data/2018-19/expert.txt";
-		System.out.println("Classification Data URL: "+URL1);
-		System.out.println("Location Data URL: "+URL2);
-		System.out.println("Expert Data URL: "+URL3);
-
-		try {
-			ExamPart1.readClassificationData(URL1, classList);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
-		try {
-			ExamPart1.readLocationData(URL2, locList);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
-		try {
-			ExamPart1.readExpertData(URL3, expList);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
+		ExamPart1 one = new ExamPart1();
+		System.out.println("Classification Data URL: "+one.URL1);
+		System.out.println("Location Data URL: "+one.URL2);
+		System.out.println("Expert Data URL: "+one.URL3);
 
 		//All Lions Identified By Experts
 		ImageSelector im1 = new GivenSpecies();
 		ArrayList<Classification> lion = new ArrayList<>();
-		lion = im1.select(expList, "lion");
+		lion = im1.select(one.expList, "lion");
 		ArrayList<Integer> lions = new ArrayList<>();
 		for(Classification x : lion) {
 			lions.add(x.imgID);
@@ -47,14 +21,14 @@ public class ExamPart3 {
 		//All Lion Candidates By Volunteers - 50% Agree on Species
 		ImageSelector im2 = new PossibleSpecies();
 		ArrayList<Classification> possibleLion = new ArrayList<>();
-		possibleLion = im2.select(classList, "lion");
+		possibleLion = im2.select(one.classList, "lion");
 		ArrayList<Integer> possibleLions = new ArrayList<>();
 		for(Classification x : possibleLion) {
 			possibleLions.add(x.imgID);
 		}
 
 		//Total Images
-		double K = expList.size();
+		double K = one.expList.size();
 
 		//Total Lions
 		double L = lion.size();
@@ -83,19 +57,20 @@ public class ExamPart3 {
 		double TN = N - FN;
 
 		double MCC = (double) (TP*TN - FP*FN)/Math.sqrt((TP+FP)*(TP+FN)*(TN+FP)*(TN*FN));
-		System.out.println("\nMatthews Correlation Coefficient (MCC) for Lions: "+MCC);
+		System.out.println("\n<For Images Identified As Lion Candidates By More Than 50% of Volunteers>");
+		System.out.println("Matthews Correlation Coefficient (MCC) for Lions: "+MCC);
 
 		//All Lion Candidates By Volunteers - 100% Agree on Species
 		ImageSelector im3 = new PossibleSpecies2();
 		ArrayList<Classification> possibleLion2 = new ArrayList<>();
-		possibleLion2 = im3.select(classList, "lion");
+		possibleLion2 = im3.select(one.classList, "lion");
 		ArrayList<Integer> possibleLions2 = new ArrayList<>();
 		for(Classification x : possibleLion2) {
 			possibleLions2.add(x.imgID);
 		}
 
 		//Total Images
-		double K2 = expList.size();
+		double K2 = one.expList.size();
 
 		//Total Lions
 		double L2 = lion.size();
@@ -124,6 +99,7 @@ public class ExamPart3 {
 		double TN2 = N2 - FN2;
 
 		double MCC2 = (double) (TP2*TN2 - FP2*FN2)/Math.sqrt((TP2+FP2)*(TP2+FN2)*(TN2+FP2)*(TN2*FN2));
-		System.out.println("\nMatthews Correlation Coefficient (MCC) for Lions: "+MCC2);
+		System.out.println("\n<For Images Identified As Lion Candidates By 100% of Volunteers>");
+		System.out.println("Matthews Correlation Coefficient (MCC) for Lions: "+MCC2);
 	}
 }

@@ -8,19 +8,6 @@ public class ExamPart3 {
 		System.out.println("Airports Data URL: "+one.URL1);
 		System.out.println("Flights Data URL: "+one.URL2);
 
-		try {
-			one.readAirportData(one.URL1);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
-		try {
-			one.readFlightData(one.URL2);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
-
 		one.print();
 
 		//Direct Flights from LHR to CPT that last no more than 24 hours
@@ -67,7 +54,7 @@ public class ExamPart3 {
 				}
 			}
 		}
-		System.out.println("<Cheapest Flight from LHR to CPT for less than 24 Hours>");
+		System.out.println("\n<Cheapest Flight from LHR to CPT for less than 24 Hours>");
 		System.out.println("\nFrom: "+firstFlight.origin_code+" to "+firstFlight.destin_code+" to "+secondFlight.destin_code);
 		System.out.println("1st Flight Code: "+firstFlight.flight_code);
 		System.out.println("2nd Flight Code: "+secondFlight.flight_code);
