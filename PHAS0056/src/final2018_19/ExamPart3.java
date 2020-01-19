@@ -42,7 +42,7 @@ public class ExamPart3 {
 		}
 
 		//Positives
-		double P = possibleLions.size();
+		double P = possibleLions.stream().distinct().count();
 
 		//Negatives
 		double N =  K - P;
@@ -84,7 +84,7 @@ public class ExamPart3 {
 		}
 
 		//Positives
-		double P2 = possibleLions2.size();
+		double P2 = possibleLions2.stream().distinct().count();
 
 		//Negatives
 		double N2 =  K2 - P2;

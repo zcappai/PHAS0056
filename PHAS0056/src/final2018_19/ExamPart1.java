@@ -83,7 +83,7 @@ public class ExamPart1 {
 		//Total number of images taken
 		System.out.println("\nTotal No. of Images: "+one.locList.size()+" images");
 
-		//Number of images classified by at least 1 volunteer
+		//Number of images classified by at least 1 volunteer - USE THE METHOD FOR ATLEAST 10 VOLUNTEERS INSTEAD (MORE EFFICIENT)
 		Collections.sort(one.classList, Classification.IDsort);
 		ArrayList<Integer> sortedImgID = new ArrayList<Integer>();
 		for(Classification x : one.classList) {
