@@ -11,8 +11,62 @@ public class ExamPart1 {
 	protected String URL3 = "http://www.hep.ucl.ac.uk/undergrad/3459/exam-data/2016-17/recording02.txt";
 	protected String URL4 = "http://www.hep.ucl.ac.uk/undergrad/3459/exam-data/2016-17/recording03.txt";
 	protected String URL5 = "http://www.hep.ucl.ac.uk/undergrad/3459/exam-data/2016-17/recording04.txt";
+	protected String URL6 = "http://www.hep.ucl.ac.uk/undergrad/3459/exam-data/2016-17/genA.txt";
+	protected String URL7 = "http://www.hep.ucl.ac.uk/undergrad/3459/exam-data/2016-17/genB.txt";
+	protected String URL8 = "http://www.hep.ucl.ac.uk/undergrad/3459/exam-data/2016-17/genC.txt";
 	protected ArrayList<Index> indexList = new ArrayList<>();
 	protected ArrayList<Object[]> recordings = new ArrayList<>();
+
+	public ExamPart1() {
+		try {
+			readIndexData(URL1);
+		}
+		catch(Exception e) {
+			System.out.println("Invalid URL entered! Please enter valid URL!");
+		}
+		try {
+			readRecordingData(URL2);
+		}
+		catch(Exception e) {
+			System.out.println("Invalid URL entered! Please enter valid URL!");
+		}
+		try {
+			readRecordingData(URL3);
+		}
+		catch(Exception e) {
+			System.out.println("Invalid URL entered! Please enter valid URL!");
+		}
+		try {
+			readRecordingData(URL4);
+		}
+		catch(Exception e) {
+			System.out.println("Invalid URL entered! Please enter valid URL!");
+		}
+		try {
+			readRecordingData(URL5);
+		}
+		catch(Exception e) {
+			System.out.println("Invalid URL entered! Please enter valid URL!");
+		}
+		try {
+			readRecordingData(URL6);
+		}
+		catch(Exception e) {
+			System.out.println("Invalid URL entered! Please enter valid URL!");
+		}
+		try {
+			readRecordingData(URL7);
+		}
+		catch(Exception e) {
+			System.out.println("Invalid URL entered! Please enter valid URL!");
+		}
+		try {
+			readRecordingData(URL8);
+		}
+		catch(Exception e) {
+			System.out.println("Invalid URL entered! Please enter valid URL!");
+		}
+	}
 
 	//TAKES URL AS ARGUMENT AND RETURNS 'BufferedReader' OBJECT
 	public BufferedReader brFromURL(String urlName) throws IOException{ //Specifies that method throws an IOException
@@ -70,37 +124,9 @@ public class ExamPart1 {
 		System.out.println("Recording 2 Data URL: "+one.URL3);
 		System.out.println("Recording 3 Data URL: "+one.URL4);
 		System.out.println("Recording 4 Data URL: "+one.URL5);
-
-		try {
-			one.readIndexData(one.URL1);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
-		try {
-			one.readRecordingData(one.URL2);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
-		try {
-			one.readRecordingData(one.URL3);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
-		try {
-			one.readRecordingData(one.URL4);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
-		try {
-			one.readRecordingData(one.URL5);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
+		System.out.println("Gen A Data URL: "+one.URL6);
+		System.out.println("Gen B Data URL: "+one.URL7);
+		System.out.println("Gen C Data URL: "+one.URL8);
 
 		System.out.println("\n<Information Printing>");
 		for(Object[] x : one.recordings) {

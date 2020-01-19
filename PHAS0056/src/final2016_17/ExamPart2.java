@@ -10,37 +10,6 @@ public class ExamPart2 {
 		System.out.println("Recording 3 Data URL: "+one.URL4);
 		System.out.println("Recording 4 Data URL: "+one.URL5);
 
-		try {
-			one.readIndexData(one.URL1);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
-		try {
-			one.readRecordingData(one.URL2);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
-		try {
-			one.readRecordingData(one.URL3);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
-		try {
-			one.readRecordingData(one.URL4);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
-		try {
-			one.readRecordingData(one.URL5);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
-
 		System.out.println("\n<Classification: Long or Short>");
 		Identity classification1 = new longShort();
 		for(Object[] x : one.recordings) {
