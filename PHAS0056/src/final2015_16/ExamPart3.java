@@ -13,19 +13,6 @@ public class ExamPart3 {
 		System.out.println("Detector Data URL: "+one.URL1);
 		System.out.println("Signal Data URL: "+one.URL2);
 
-		try {
-			one.readDetectorData(one.URL1);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
-		try {
-			one.readSignalData(one.URL2);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
-
 		//Method 1
 		for(Detectors x : one.detectorList) {
 			ArrayList<ArrayList<Double>> volts = new ArrayList<>();

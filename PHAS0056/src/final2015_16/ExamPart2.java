@@ -7,20 +7,7 @@ public class ExamPart2 {
 		System.out.println("Detector Data URL: "+one.URL1);
 		System.out.println("Signal Data URL: "+one.URL2);
 
-		try {
-			one.readDetectorData(one.URL1);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
-		try {
-			one.readSignalData(one.URL2);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
-
-		//
+		//Time From Maximum Record Voltage For Each Pulse
 		System.out.println("\n<Arrival Time For Each Pulse With Detector ID>");
 		ArrivalTime arriv1 = new OriginalTime();
 		for(Signals x : one.signalList) {
@@ -29,7 +16,7 @@ public class ExamPart2 {
 			System.out.println("Arrival Time: "+max_volt_time+" ns");
 		}
 
-		//
+		//Time Of 1st Voltage Above 1.0V
 		System.out.println("\n<Arrival Time For 1st Voltage Per Pulse Above 1.0V With Detector ID>");
 		ArrivalTime arriv2 = new givenThreshold();
 		for(Detectors x : one.detectorList) {
@@ -39,7 +26,6 @@ public class ExamPart2 {
 			for(Signals y : one.signalList) {
 				if(x.ID.equals(y.ID)) {
 					double max_volt_time = arriv2.calculate(y.volt, 1.0);
-					System.out.println("Arrival Time: "+max_volt_time+" ns");
 					tot_time += max_volt_time;
 					count++;
 				}

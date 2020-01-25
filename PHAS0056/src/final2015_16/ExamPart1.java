@@ -11,6 +11,21 @@ public class ExamPart1 {
 	protected ArrayList<Detectors> detectorList = new ArrayList<>();
 	protected ArrayList<Signals> signalList = new ArrayList<>();
 
+	public ExamPart1() {
+		try {
+			readDetectorData(URL1);
+		}
+		catch(Exception e) {
+			System.out.println("Invalid URL entered! Please enter valid URL!");
+		}
+		try {
+			readSignalData(URL2);
+		}
+		catch(Exception e) {
+			System.out.println("Invalid URL entered! Please enter valid URL!");
+		}
+	}
+
 	//TAKES URL AS ARGUMENT AND RETURNS 'BufferedReader' OBJECT
 	public BufferedReader brFromURL(String urlName) throws IOException{ //Specifies that method throws an IOException
 		URL u = new URL(urlName); //Creates 'URL' object with URL from argument
@@ -44,19 +59,6 @@ public class ExamPart1 {
 		ExamPart1 one = new ExamPart1();
 		System.out.println("Detector Data URL: "+one.URL1);
 		System.out.println("Signal Data URL: "+one.URL2);
-
-		try {
-			one.readDetectorData(one.URL1);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
-		try {
-			one.readSignalData(one.URL2);
-		}
-		catch(Exception e) {
-			System.out.println("Invalid URL entered! Please enter valid URL!");
-		}
 
 		System.out.println("\nTotal Number of Pulses: "+one.signalList.size());
 
