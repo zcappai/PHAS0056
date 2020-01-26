@@ -49,7 +49,7 @@ public class ExamPart3 {
 					if((x.getValue()+y.getValue())<maxTime && totalCost == 0 || (x.getKey().cost+y.getKey().cost)<totalCost) {
 						firstFlight = x.getKey();
 						secondFlight = y.getKey();
-						totalCost = x.getKey().cost+x.getKey().cost;
+						totalCost = x.getKey().cost+y.getKey().cost;
 					}
 				}
 			}
