@@ -21,6 +21,7 @@ public class ExamPart2 {
 			System.out.println("Year: "+x.getKey()+", Temperature (Celsius): "+x.getValue());
 		}
 
+		//TMAX READINGS PER COUNTRY
 		HashMap<String, Integer> countries = new HashMap<String, Integer>();
 		for(Countries x : one.countryList) {
 			for(Readings y : TMAX) {
