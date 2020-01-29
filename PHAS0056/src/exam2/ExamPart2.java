@@ -35,9 +35,5 @@ public class ExamPart2 {
 				}
 			}
 		}
-		System.out.println(countries);
-		for(Readings x : TMAX) {
-
-		}
 	}
 }

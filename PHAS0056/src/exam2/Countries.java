@@ -9,7 +9,7 @@ public class Countries {
 
 	public Countries(String line) {
 		try(Scanner sc = new Scanner(line)) {
-			StringBuilder str = new StringBuilder();
+			StringBuilder str = new StringBuilder(); //To Construct Country/Region Name
 			this.reg_ID = sc.next();
 			while(sc.hasNext()) {
 				str.append(sc.next());

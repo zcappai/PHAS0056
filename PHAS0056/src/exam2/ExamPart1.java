@@ -44,6 +44,7 @@ public class ExamPart1 {
 		return new BufferedReader(isr);
 	}
 
+	//IMPORTING STATIONS DATA
 	public void readStationsData(String URL, ArrayList<Stations> list)  throws Exception{
 		BufferedReader br = brFromURL(URL);
 		String line = ""; //Initialising empty string to store line data
@@ -54,6 +55,7 @@ public class ExamPart1 {
 		}
 	}
 
+	//IMPORTING COUNTRIES DATA
 	public void readCountriesData(String URL, ArrayList<Countries> list)  throws Exception{
 		BufferedReader br = brFromURL(URL);
 		String line = ""; //Initialising empty string to store line data
@@ -64,6 +66,7 @@ public class ExamPart1 {
 		}
 	}
 
+	//IMPORTING READINGS DATA
 	public void readReadingsData(String URL, ArrayList<Readings> list)  throws Exception{
 		BufferedReader br = brFromURL(URL);
 		String line = ""; //Initialising empty string to store line data
@@ -82,6 +85,7 @@ public class ExamPart1 {
 
 		System.out.println("\nTotal Number of Weather Stations: "+one.readingList.size());
 
+		//TOTAL NUMBER OF VALID TMAX MEASUREMENTS
 		int countTMAX = 0;
 		for(Readings x : one.readingList) {
 			if(x.type.equals("TMAX")) {
@@ -94,6 +98,7 @@ public class ExamPart1 {
 		}
 		System.out.println("\nTotal Number of Valid TMAX Measurements: "+countTMAX);
 
+		//TOTAL NUMBER OF VALID TMIN MEASUREMENTS
 		int countTMIN = 0;
 		for(Readings x : one.readingList) {
 			if(x.type.equals("TMIN")) {
@@ -106,6 +111,7 @@ public class ExamPart1 {
 		}
 		System.out.println("\nTotal Number of Valid TMIN Measurements: "+countTMIN);
 
+		//TOTAL NUMBER OF VALID PRCP MEASUREMENTS
 		int countPRCP = 0;
 		for(Readings x : one.readingList) {
 			if(x.type.equals("PRCP")) {
@@ -118,6 +124,7 @@ public class ExamPart1 {
 		}
 		System.out.println("\nTotal Number of Valid PRCP Measurements: "+countPRCP);
 
+		//TOTAL NUMBER OF VALID SNWD MEASUREMENTS
 		int countSNWD = 0;
 		for(Readings x : one.readingList) {
 			if(x.type.equals("SNWD")) {
@@ -130,18 +137,23 @@ public class ExamPart1 {
 		}
 		System.out.println("\nTotal Number of Valid SNWD Measurements: "+countSNWD);
 
+		//ARRAYLISTS OF TMAX READINGS ONLY
 		ArrayList<Readings> TMAX = new ArrayList<Readings>();
 		for(Readings x : one.readingList) {
 			if(x.type.equals("TMAX")) {
 				TMAX.add(x);
 			}
 		}
+
+		//ARRAYLISTS OF TMIN READINGS ONLY
 		ArrayList<Readings> TMIN = new ArrayList<Readings>();
 		for(Readings x : one.readingList) {
 			if(x.type.equals("TMIN")) {
 				TMIN.add(x);
 			}
 		}
+
+		//LATEST DATE WITH ATLEAST 1 VALID TMAX MEASUREMENT
 		int late_year = 0;
 		int late_month = 0;
 		for(Readings x : TMAX) {
@@ -149,23 +161,26 @@ public class ExamPart1 {
 				if(y != -9999) {
 					late_year = x.year;
 					late_month = x.month;
-					break;
 				}
 			}
 		}
 		System.out.println("\nLatest Date With Atleast 1 Valid TMAX Measurement: "+late_month+"/"+late_year);
 
-		//		int early_year = 0;
-		//		int early_month = 0;
-		//		for(Readings x : TMAX) {
-		//			for(Integer y : x.readings) {
-		//				if(y != -9999) {
-		//					early_year = x.year;
-		//					early_month = x.month;
-		//					break;
-		//				}
-		//			}
-		//		}
+		//EARLIEST DATE WITH ATLEAST 1 VALID TMAX MEASUREMENT
+		int early_year = 0;
+		int early_month = 0;
+		for(Readings x : TMAX) {
+			for(Integer y : x.readings) {
+				if(y != -9999 && early_year != 0) {
+					early_year = x.year;
+					early_month = x.month;
+					break;
+				}
+				break;
+			}
+			break;
+		}
+		System.out.println("\nEarliest Date With Atleast 1 Valid TMAX Measurement: "+early_month+"/"+early_year);
 
 		//HIGHEST TMAX VALUE
 		double highestTMAX = 0;

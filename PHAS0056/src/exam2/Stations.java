@@ -9,7 +9,7 @@ public class Stations {
 
 	public Stations(String line) {
 		try(Scanner sc = new Scanner(line)) {
-			StringBuilder str = new StringBuilder();
+			StringBuilder str = new StringBuilder(); //To Construct Station Name
 			this.stat_ID = sc.next();
 			while(sc.hasNext()) {
 				str.append(sc.next());
